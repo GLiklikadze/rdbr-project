@@ -2,7 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { lazy, Suspense } from "react";
 import RootLayout from "./components/layout/RootLayout";
-const HomePage = lazy(() => import("./pages/home/HomePage"));
+
+const MainPage = lazy(() => import("./pages/main/MainPage"));
+
 function App() {
   return (
     <Routes>
@@ -11,7 +13,7 @@ function App() {
           index
           element={
             <Suspense fallback="Loading...">
-              <HomePage />
+              <MainPage />
             </Suspense>
           }
         />
