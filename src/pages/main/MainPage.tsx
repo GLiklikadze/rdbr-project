@@ -4,7 +4,7 @@ import StartLearningSection from "./start-learning/StartLearningSection";
 
 const MainPage = () => {
   return (
-    <div className="flex flex-col gap-16 px-[177px] py-16">
+    <div className="flex flex-col gap-16 px-[177px] py-16 pb-32">
       <HeroSection />
       <ContinueLearningSection />
       <StartLearningSection />
