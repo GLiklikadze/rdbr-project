@@ -4,6 +4,9 @@ import { lazy, Suspense } from "react";
 import RootLayout from "./components/layout/RootLayout";
 
 const MainPage = lazy(() => import("./pages/main/MainPage"));
+const CourseDetailsPage = lazy(
+  () => import("./pages/course-details/CourseDetailsPage"),
+);
 
 function App() {
   return (
@@ -14,6 +17,14 @@ function App() {
           element={
             <Suspense fallback="Loading...">
               <MainPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="courses/:courseId"
+          element={
+            <Suspense fallback="Loading...">
+              <CourseDetailsPage />
             </Suspense>
           }
         />

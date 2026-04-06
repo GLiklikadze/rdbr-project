@@ -1,6 +1,10 @@
+import { useGetFeaturedCourses } from "../../../react-query/query/courses/coursesQuery";
 import StartLearningBox from "./StartLearningBox";
+import type { Course } from "../../../types";
 
 const StartLearningSection = () => {
+  const { data: featuredCourses } = useGetFeaturedCourses();
+  console.log("Featured Courses:", featuredCourses);
   return (
     <div className="flex flex-col gap-8">
       <div>
@@ -13,9 +17,9 @@ const StartLearningSection = () => {
         </p>
       </div>
       <div className="flex flex-row gap-6">
-        <StartLearningBox />
-        <StartLearningBox />
-        <StartLearningBox />
+        {featuredCourses?.data?.map((course: Course) => (
+          <StartLearningBox key={course?.id} featuredCourses={course} />
+        ))}
       </div>
     </div>
   );
