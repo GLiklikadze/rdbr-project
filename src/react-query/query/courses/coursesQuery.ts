@@ -1,8 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import {
-  getFeaturedCourses,
-  getSingleCourse,
-} from "../../../api/courses/courses";
+import { getFeaturedCourses, getSingleCourse } from "../../../api/courses";
 
 export const useGetFeaturedCourses = () => {
   return useQuery({
