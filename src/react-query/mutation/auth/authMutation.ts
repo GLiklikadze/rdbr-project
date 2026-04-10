@@ -6,7 +6,11 @@ export const useLogin = () => {
     mutationKey: ["login"],
     mutationFn: login,
     onSuccess: (data) => {
-      localStorage.setItem("user", JSON.stringify(data.user));
+      const token = data?.data?.token;
+      if (!token) {
+        return;
+      }
+      localStorage.setItem("auth_token", token);
     },
   });
 };

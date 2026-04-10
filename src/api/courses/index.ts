@@ -1,5 +1,5 @@
 import { httpClient } from "..";
-import type { Course, CoursesResponse } from "../../types";
+import type { CourseDetails, CoursesResponse } from "../../types";
 
 export const getFeaturedCourses = async (): Promise<CoursesResponse> => {
   try {
@@ -15,7 +15,9 @@ export const getFeaturedCourses = async (): Promise<CoursesResponse> => {
   }
 };
 
-export const getSingleCourse = async (courseId: string): Promise<Course> => {
+export const getSingleCourse = async (
+  courseId: string,
+): Promise<CourseDetails> => {
   try {
     const { data, status, statusText } = await httpClient.get(
       `/courses/${courseId}`,

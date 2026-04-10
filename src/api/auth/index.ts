@@ -15,9 +15,6 @@ export const login = async ({ email, password }: httpLoginProps) => {
     if (status !== 200 && status !== 201) {
       throw new Error(`HTTP error! status: ${status} ${statusText}`);
     }
-    if (data?.token) {
-      localStorage.setItem("auth_token", data.token);
-    }
     return data;
   } catch (err) {
     console.error("Can`t Login", err);

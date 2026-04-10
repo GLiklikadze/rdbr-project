@@ -1,4 +1,3 @@
-import coursePhoto from "@/assets/rocket.png";
 import starIcon from "@/assets/star.png";
 import type { Course } from "../../../types";
 import { useNavigate } from "react-router-dom";
@@ -10,7 +9,7 @@ const StartLearningBox: React.FC<{ featuredCourses: Course }> = ({
   return (
     <div className="flex h-[576px] w-[506px] flex-col rounded-xl bg-[#FFFFFF] p-5">
       <img
-        src={coursePhoto}
+        src={featuredCourses?.image}
         alt="course-photo"
         className="h-[262px] w-[466px] rounded-xl"
       />
