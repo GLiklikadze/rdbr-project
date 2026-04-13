@@ -5,7 +5,7 @@ export interface ProfileModalProps extends PropsWithChildren {
     fullName: string;
     id: number;
     username: string;
-    age: string;
+    age: number | string;
     mobileNumber: string;
     avatar: null | string;
     profileComplete: boolean;

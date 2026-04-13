@@ -10,6 +10,8 @@ export const useGetWeeklySchedule = (courseId: string) => {
     queryKey: ["get-weekly-schedule", courseId],
     retry: false,
     queryFn: () => getWeeklySchedule(courseId),
+    staleTime: 5 * 60 * 1000,
+    gcTime: 5 * 60 * 1000,
   });
 };
 

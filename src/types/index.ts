@@ -54,9 +54,33 @@ export interface CourseDetails {
   category: Category;
   topic: Topic;
   instructor: Instructor;
-  enrollment: null;
+  enrollment: null | EnrollmentCourse;
+}
+export interface EnrollmentCourse {
+  id: number;
+  progress: number;
+  completedAt: string | null;
+  schedule: ScheduleDetails;
 }
 
+export interface ScheduleDetails {
+  weeklySchedule: LabelObject;
+  timeSlot: LabelObject;
+  sessionType: SessionType;
+  location: string;
+  totalPrice: string; // Keep as string since JSON has quotes
+}
+
+export interface LabelObject {
+  id: number;
+  label: string;
+}
+
+export interface SessionType {
+  id: number;
+  name: string;
+  priceModifier: string; // Keep as string to match "30.00"
+}
 export interface Category {
   id: number;
   name: string;
@@ -101,3 +125,13 @@ export interface SessionTimeSlot {
   startTime: string;
   endTime: string;
 }
+export type UserProfileType = {
+  age: number | null;
+  avatar: string;
+  email: string;
+  fullName: string;
+  id: number;
+  mobileNumber: string | null;
+  profileComplete: boolean;
+  username: string;
+};

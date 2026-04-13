@@ -15,13 +15,18 @@ import { useUpdateProfile } from "../../../react-query/mutation/profile/profileM
 import uploadIcon from "@/assets/upload.svg";
 import userIcon from "@/assets/user.png";
 import type { formData, ProfileModalProps } from "./types";
+import { useAtom } from "jotai";
+import { isProfileModalOpenAtom } from "../../../state";
 
 const ProfileModal: React.FC<ProfileModalProps> = ({
   children,
   userInfo,
   notCompleteProfile,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpenProfileModal, setIsOpenProfileModal] = useAtom(
+    isProfileModalOpenAtom,
+  );
+
   const [isDragging, setIsDragging] = useState(false);
   const { mutate: updateProfileMutate, isPending: updateProfilePending } =
     useUpdateProfile();
@@ -43,7 +48,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
   const onSubmit = (data: formData) => {
     console.log(data);
     updateProfileMutate(data);
-    setIsOpen(false);
+    setIsOpenProfileModal(false);
     resetForm();
   };
 
@@ -94,7 +99,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
     [],
   );
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpenProfileModal} onOpenChange={setIsOpenProfileModal}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="bg-[#FFFFFF] p-[50px] sm:h-[px] sm:max-w-[460px]">
         <DialogHeader>

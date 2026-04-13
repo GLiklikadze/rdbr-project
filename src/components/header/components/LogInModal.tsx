@@ -10,6 +10,8 @@ import {
 import { useLogin } from "../../../react-query/mutation/auth/authMutation";
 import { useState, type PropsWithChildren } from "react";
 import { Button } from "../../ui/button";
+import { useAtom } from "jotai";
+import { isLoginModalOpenAtom } from "../../../state";
 
 const LogInModal: React.FC<PropsWithChildren> = ({ children }) => {
   const { mutate: loginMutate, error, isError } = useLogin();
@@ -17,7 +19,7 @@ const LogInModal: React.FC<PropsWithChildren> = ({ children }) => {
     email: "",
     password: "",
   });
-  const [isOpen, setIsOpen] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useAtom(isLoginModalOpenAtom);
   const [errors, setErrors] = useState({
     email: "",
     password: "",
@@ -56,12 +58,12 @@ const LogInModal: React.FC<PropsWithChildren> = ({ children }) => {
 
     loginMutate(form, {
       onSuccess: () => {
-        setIsOpen(false);
+        setIsLoginOpen(false);
       },
     });
   };
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="bg-[#FFFFFF] p-[50px] sm:h-[481px] sm:max-w-[460px]">
         <DialogHeader>

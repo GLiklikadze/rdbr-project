@@ -15,3 +15,10 @@ export type sessionType = {
   location: string;
   price: string;
 };
+
+export type ProfileAlertBoxProps = {
+  alertTitle: string;
+  alertMessage: string;
+  buttonText: string;
+  buttonAction: () => void;
+};

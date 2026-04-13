@@ -23,7 +23,13 @@ const CourseDetailsInfoSection: React.FC<CourseDetailsInfoSectionProps> = ({
   };
   return (
     <section className="flex max-w-[812px] flex-col">
-      <div className="mb-[33px] text-[18px] font-medium">Home</div>
+      <div className="mb-[33px] text-[18px] font-medium">
+        Home &#10095; Browse &#10095;{" "}
+        <span className="text-[#4F46E5]">
+          {" "}
+          {courseDetailsData?.category?.name}
+        </span>
+      </div>
       <h1 className="mb-6 text-[40px] font-medium text-[#141414]">
         {courseDetailsData?.title}
       </h1>
@@ -60,7 +66,7 @@ const CourseDetailsInfoSection: React.FC<CourseDetailsInfoSectionProps> = ({
             />
             <div>{avgRanking() || "N/A"}</div>
           </div>
-          <div className="flex flex-row items-center gap-[10px]">
+          <div className="flex flex-row items-center gap-[10px] rounded-xl px-3 py-2 hover:bg-[#DDDBFA]">
             <img
               src={codeIcon}
               alt="code-icon"

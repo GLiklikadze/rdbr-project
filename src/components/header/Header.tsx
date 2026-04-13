@@ -35,7 +35,7 @@ const Header = () => {
         {!isAuth && (
           <div className="flex gap-[15px]">
             <LogInModal>
-              <button className="h-[60px] w-[125px] rounded-[8px] border-2 border-[#958FEF] text-[20px] font-medium text-[#4F46E5]">
+              <button className="h-[60px] w-[125px] rounded-[8px] border-2 border-[#958FEF] text-[20px] font-medium text-[#4F46E5] hover:border-[#4F46E5] hover:bg-[#4F46E5] hover:text-white">
                 Log In
               </button>
             </LogInModal>
@@ -60,8 +60,14 @@ const Header = () => {
             <ProfileModal
               userInfo={{
                 ...userInfo,
+                fullName: userInfo?.fullName ?? "",
+                id: userInfo?.id ?? 0,
+                username: userInfo?.username ?? "",
                 age: userInfo?.age ?? "",
                 mobileNumber: userInfo?.mobileNumber ?? "",
+                avatar: userInfo?.avatar ?? null,
+                profileComplete: userInfo?.profileComplete ?? false,
+                email: userInfo?.email ?? "",
               }}
               notCompleteProfile={notCompleteProfile}
             >
