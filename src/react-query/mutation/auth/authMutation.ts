@@ -1,7 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../../api/auth";
+import { useAtom } from "jotai";
+import { tokenAtom, userProfileAtom } from "../../../state";
 
 export const useLogin = () => {
+  const [, setToken] = useAtom(tokenAtom);
+  const [, setProfile] = useAtom(userProfileAtom);
   return useMutation({
     mutationKey: ["login"],
     mutationFn: login,
@@ -10,7 +14,8 @@ export const useLogin = () => {
       if (!token) {
         return;
       }
-      localStorage.setItem("auth_token", token);
+      setToken(token);
+      setProfile(data?.data?.user);
     },
   });
 };

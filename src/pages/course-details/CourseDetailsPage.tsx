@@ -193,7 +193,10 @@ const CourseDetailsPage = () => {
                           className={`${baseClasses} ${stateClasses}`}
                         >
                           <div className="flex items-center justify-center">
-                            <img src={time?.imgSrc} className="h-6 w-6" />
+                            <img
+                              src={time?.imgSrc}
+                              className="h-6 w-6 fill-red-800"
+                            />
                           </div>
                           <div>
                             <div className="text-left text-sm">
