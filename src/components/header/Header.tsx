@@ -3,8 +3,8 @@ import rocketIcon from "@/assets/rocket.png";
 import starstIcon from "@/assets/stars.png";
 import bookIcon from "@/assets/book.png";
 import userIcon from "@/assets/user.png";
-import LogInModal from "./components/LogInModal";
-import ProfileModal from "./components/ProfileModal";
+import LogInModal from "../modals/LogInModal";
+import ProfileModal from "../modals/ProfileModal";
 import { useAtomValue } from "jotai";
 import { isAuthenticatedAtom, userProfileAtom } from "../../state";
 

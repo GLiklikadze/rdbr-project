@@ -7,6 +7,7 @@ import clockIcon from "@/assets/clock.svg";
 import sessionTypeIcon from "@/assets/session_type.svg";
 import calendar2Icon from "@/assets/calendar_2.svg";
 import checkIcon from "@/assets/check.svg";
+import refreshIcon from "@/assets/refresh.svg";
 
 import { useParams } from "react-router-dom";
 import { useGetSingleCourse } from "../../react-query/query/courses/coursesQuery";
@@ -23,7 +24,10 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../../components/ui/accordion";
-import { useEnrolleCourse } from "../../react-query/mutation/enrollments/enrollmentsMutation";
+import {
+  useCompleteEnrolledCourse,
+  useEnrolleCourse,
+} from "../../react-query/mutation/enrollments/enrollmentsMutation";
 import { days, hours, sessionTypes } from "./components/constantData";
 import type { daysType, hoursType, sessionType } from "./components/types";
 import { useAtom, useAtomValue } from "jotai";
@@ -34,6 +38,7 @@ import {
   isProfileModalOpenAtom,
 } from "../../state";
 import ProfileAlertBox from "./components/profileAlertBox";
+import EnrollmentConflictModal from "../../components/modals/EnrollmentConflictModal";
 
 const CourseDetailsPage = () => {
   const { courseId } = useParams();
@@ -56,8 +61,8 @@ const CourseDetailsPage = () => {
   const { data: sessionTypeData, mutate: mutateSessionType } =
     useGetSessionType();
 
-  const { mutate: enrolleCourseMutate } = useEnrolleCourse();
-
+  const { mutate: enrolleCourseMutate, error, isError } = useEnrolleCourse();
+  const { mutate: completeEnrolledMutate } = useCompleteEnrolledCourse();
   const courseScheduleId =
     sessionTypeData?.find((item) => item.id === selectedSessionId)
       ?.courseScheduleId ?? 0;
@@ -73,6 +78,7 @@ const CourseDetailsPage = () => {
       setIsOpenProfileModal(true);
       return;
     }
+
     if (isEnrollButtonWorks) {
       enrolleCourseMutate({
         courseId: Number(courseId ?? 0),
@@ -82,7 +88,6 @@ const CourseDetailsPage = () => {
     }
   };
 
-  console.log(selectedId, selectedHourId, selectedSessionId);
   console.log("sessiontypes", sessionTypeData);
 
   const toggleId = (id: number) => {
@@ -141,6 +146,12 @@ const CourseDetailsPage = () => {
 
   const totalPrice = courseDetailsData ? Math.trunc(base + extra) : "";
 
+  const handleCourseComplete = () => {
+    completeEnrolledMutate({
+      courseEnrollementId: Number(courseDetailsData?.enrollment?.id),
+    });
+  };
+
   return (
     <div className="my-16 px-[177px] text-[#525252]">
       <div className="flex flex-row gap-[133px]">
@@ -153,8 +164,14 @@ const CourseDetailsPage = () => {
               <div className="flex flex-col gap-[22px]">
                 {courseDetailsData?.enrollment?.id &&
                   !courseDetailsData?.enrollment?.completedAt && (
-                    <div className="mb- mt-[-29px] h-[56px] w-[111px] rounded-full bg-[#736BEA] bg-opacity-10 p-4 font-semibold text-[#736BEA]">
+                    <div className="mt-[-29px] h-[56px] w-[111px] rounded-full bg-[#736BEA] bg-opacity-10 p-4 text-xl font-semibold text-[#736BEA]">
                       Enrolled
+                    </div>
+                  )}
+                {courseDetailsData?.enrollment?.id &&
+                  courseDetailsData?.enrollment?.completedAt && (
+                    <div className="mt-[-29px] h-[56px] w-[140px] rounded-full bg-[#1DC31D] bg-opacity-10 p-4 text-xl font-semibold text-[#1DC31D]">
+                      Completed
                     </div>
                   )}
                 <div className="flex flex-row items-center gap-3">
@@ -210,20 +227,36 @@ const CourseDetailsPage = () => {
                     </div>
                   </div>
                 </div>
-                <button
-                  className={`mt-8 flex h-[63px] w-[473px] cursor-pointer flex-row items-center justify-center gap-[10px] rounded-xl bg-[#4F46E5] font-semibold text-white`}
-                  onClick={handleCourseEnroll}
-                  type="button"
-                >
-                  Complete Course
-                  <div>
-                    <img
-                      src={checkIcon}
-                      alt="check-icon"
-                      className="inline-block h-[24px] w-[24px]"
-                    />
-                  </div>
-                </button>
+                {courseDetailsData?.enrollment?.progress === 100 ? (
+                  <button
+                    className={`mt-8 flex h-[63px] w-[473px] cursor-pointer flex-row items-center justify-center gap-[10px] rounded-xl bg-[#4F46E5] font-semibold text-white`}
+                    type="button"
+                  >
+                    Retake Course
+                    <div>
+                      <img
+                        src={refreshIcon}
+                        alt="refresh-icon"
+                        className="inline-block h-[24px] w-[24px]"
+                      />
+                    </div>
+                  </button>
+                ) : (
+                  <button
+                    className={`mt-8 flex h-[63px] w-[473px] cursor-pointer flex-row items-center justify-center gap-[10px] rounded-xl bg-[#4F46E5] font-semibold text-white`}
+                    onClick={handleCourseComplete}
+                    type="button"
+                  >
+                    Complete Course
+                    <div>
+                      <img
+                        src={checkIcon}
+                        alt="check-icon"
+                        className="inline-block h-[24px] w-[24px]"
+                      />
+                    </div>
+                  </button>
+                )}
               </>
             </div>
           )}
@@ -456,6 +489,12 @@ const CourseDetailsPage = () => {
               )}
             </>
           )}
+          <EnrollmentConflictModal
+            error={error}
+            isError={isError}
+            courseId={courseId ?? ""}
+            courseScheduleId={courseScheduleId}
+          />
         </section>
       </div>
     </div>

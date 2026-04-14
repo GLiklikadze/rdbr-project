@@ -6,17 +6,17 @@ import {
   DialogContent,
   DialogDescription,
   DialogFooter,
-} from "../../ui/dialog";
+} from "../ui/dialog";
 
 import { useCallback, useState } from "react";
-import { Button } from "../../ui/button";
+import { Button } from "../ui/button";
 import { Controller, useForm } from "react-hook-form";
-import { useUpdateProfile } from "../../../react-query/mutation/profile/profileMutation";
+import { useUpdateProfile } from "../../react-query/mutation/profile/profileMutation";
 import uploadIcon from "@/assets/upload.svg";
 import userIcon from "@/assets/user.png";
-import type { formData, ProfileModalProps } from "./types";
 import { useAtom } from "jotai";
-import { isProfileModalOpenAtom } from "../../../state";
+import { isProfileModalOpenAtom } from "../../state";
+import type { formData, ProfileModalProps } from "../../types";
 
 const ProfileModal: React.FC<ProfileModalProps> = ({
   children,

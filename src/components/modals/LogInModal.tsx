@@ -6,12 +6,12 @@ import {
   DialogContent,
   DialogDescription,
   DialogFooter,
-} from "../../ui/dialog";
-import { useLogin } from "../../../react-query/mutation/auth/authMutation";
+} from "../ui/dialog";
+import { useLogin } from "../../react-query/mutation/auth/authMutation";
 import { useState, type PropsWithChildren } from "react";
-import { Button } from "../../ui/button";
+import { Button } from "../ui/button";
 import { useAtom } from "jotai";
-import { isLoginModalOpenAtom } from "../../../state";
+import { isLoginModalOpenAtom } from "../../state";
 
 const LogInModal: React.FC<PropsWithChildren> = ({ children }) => {
   const { mutate: loginMutate, error, isError } = useLogin();

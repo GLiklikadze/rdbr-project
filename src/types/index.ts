@@ -1,3 +1,5 @@
+import type { AxiosError } from "axios";
+import type { PropsWithChildren } from "react";
 export interface CoursesResponse {
   data: Course[];
 }
@@ -135,3 +137,30 @@ export type UserProfileType = {
   profileComplete: boolean;
   username: string;
 };
+
+export interface ProfileModalProps extends PropsWithChildren {
+  userInfo: {
+    fullName: string;
+    id: number;
+    username: string;
+    age: number | string;
+    mobileNumber: string;
+    avatar: null | string;
+    profileComplete: boolean;
+    email: string;
+  };
+  notCompleteProfile: boolean;
+}
+export interface formData {
+  full_name: string;
+  age: string;
+  mobile_number: string;
+  avatar: File | null;
+}
+
+export interface EnrollmentConflictModalProps {
+  error: AxiosError<unknown> | null;
+  isError: boolean;
+  courseId: string | number;
+  courseScheduleId: string | number;
+}
