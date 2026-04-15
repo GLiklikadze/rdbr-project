@@ -7,6 +7,8 @@ import LogInModal from "../modals/LogInModal";
 import ProfileModal from "../modals/ProfileModal";
 import { useAtomValue } from "jotai";
 import { isAuthenticatedAtom, userProfileAtom } from "../../state";
+import { EnrolledCoursesDrawer } from "../modals/EnrolledCoursesDrawer";
+import { DrawerTrigger } from "../ui/drawer";
 
 const Header = () => {
   const userInfo = useAtomValue(userProfileAtom);
@@ -47,16 +49,24 @@ const Header = () => {
 
         {isAuth && (
           <>
-            <button>
-              <div className="flex flex-row gap-3">
-                <img
-                  src={bookIcon}
-                  alt="logo"
-                  className="h-[26px] w-[26px] text-lg"
-                />
-                Enrolled Courses
-              </div>
-            </button>
+            <EnrolledCoursesDrawer>
+              <DrawerTrigger asChild>
+                <button
+                  onClick={(e) => {
+                    e.currentTarget.blur();
+                  }}
+                >
+                  <div className="flex flex-row gap-3">
+                    <img
+                      src={bookIcon}
+                      alt="logo"
+                      className="h-[26px] w-[26px] text-lg"
+                    />
+                    Enrolled Courses
+                  </div>
+                </button>
+              </DrawerTrigger>
+            </EnrolledCoursesDrawer>
             <ProfileModal
               userInfo={{
                 ...userInfo,

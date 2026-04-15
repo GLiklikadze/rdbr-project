@@ -201,7 +201,6 @@ const CourseDetailsPage = () => {
                   />
                   {courseDetailsData?.enrollment?.schedule?.sessionType.name}
                 </div>
-
                 <div className="flex flex-row items-center gap-3">
                   <img
                     src={pinIcon}

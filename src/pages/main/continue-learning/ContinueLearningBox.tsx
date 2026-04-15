@@ -1,9 +1,9 @@
-import coursePhoto from "@/assets/rocket.png";
+import coursePhoto from "@/assets/course_avatar.png";
 import starIcon from "@/assets/star.png";
 const ContinueLearningBox = () => {
   const completePercentage = 65;
   return (
-    <div className="h-[219px] w-[506px] rounded-xl bg-[#FFFFFF] p-5">
+    <div className="h-[219px] w-[506px] rounded-xl bg-white p-5">
       <div className="flex flex-row gap-4">
         <img
           src={coursePhoto}

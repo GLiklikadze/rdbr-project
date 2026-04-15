@@ -7,7 +7,7 @@ const StartLearningBox: React.FC<{ featuredCourses: Course }> = ({
 }) => {
   const navigate = useNavigate();
   return (
-    <div className="flex h-[576px] w-[506px] flex-col rounded-xl bg-[#FFFFFF] p-5">
+    <div className="flex h-[576px] w-[506px] flex-col rounded-xl bg-white p-5">
       <img
         src={featuredCourses?.image}
         alt="course-photo"
