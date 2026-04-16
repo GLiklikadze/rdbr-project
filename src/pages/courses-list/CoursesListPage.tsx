@@ -7,6 +7,7 @@ import arrow_down from "@/assets/arrow_down.svg";
 import {
   useGetCategories,
   useGetInstructors,
+  useGetTopic,
 } from "../../react-query/query/filters/filtersQuery";
 import { useMemo, useState } from "react";
 import type { Category, Instructor, Topic } from "../../types";
@@ -84,6 +85,7 @@ const CoursesListPage = () => {
     filters?.instructors.length;
   const { data: categoriesData } = useGetCategories();
   const { data: instructorData } = useGetInstructors();
+  const { data: topicData } = useGetTopic();
 
   const navigate = useNavigate();
   const SORT_LABELS = {
@@ -94,8 +96,8 @@ const CoursesListPage = () => {
     title_asc: "Title A-Z",
   };
   const filteredTopics = useMemo(() => {
+    if (filters.categories.length === 0) return topicData;
     if (!coursesList) return [];
-
     const uniqueTopicsMap = new Map();
 
     coursesList.forEach((course) => {
@@ -105,7 +107,7 @@ const CoursesListPage = () => {
     });
 
     return Array.from(uniqueTopicsMap.values());
-  }, [coursesList]);
+  }, [coursesList, filters.categories.length, topicData]);
   return (
     <div className="flex flex-row gap-[75px] px-[177px] py-16 text-[#525252]">
       <section className="w-[309px]">

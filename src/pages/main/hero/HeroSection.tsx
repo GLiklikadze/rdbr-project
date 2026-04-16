@@ -3,9 +3,11 @@ import heroImg2 from "@/assets/hero2.png";
 import heroImg3 from "@/assets/hero3.png";
 import { ChevronLeftCircleIcon, ChevronRightCircleIcon } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
   const [heroIndex, setHeroIndex] = useState(0);
+  const navigate = useNavigate();
   const heroData = [
     {
       heading: "Start learning something new today",
@@ -53,7 +55,10 @@ const HeroSection = () => {
           <p className="mb-10 mt-3 h-[60px] w-full pr-[230px] text-[24px] font-light">
             {heroData?.[heroIndex].description}
           </p>
-          <button className="h-[64px] w-[206px] rounded-lg bg-[#4F46E5] font-medium">
+          <button
+            className="h-[64px] w-[206px] rounded-lg bg-[#4F46E5] font-medium"
+            onClick={() => navigate("/courses")}
+          >
             {heroData?.[heroIndex].button}
           </button>
         </div>
