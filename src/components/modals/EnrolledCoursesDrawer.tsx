@@ -12,17 +12,24 @@ import starIcon from "@/assets/star.png";
 import boxIcon from "@/assets/box.svg";
 import { useGetEnrolledList } from "../../react-query/query/enrollments/enrollementsQuery";
 import { useNavigate } from "react-router-dom";
-import { useState, type PropsWithChildren } from "react";
+import { type PropsWithChildren } from "react";
+import { useAtom } from "jotai";
+import { EnrolledDrawerOpen } from "../../state";
 
 export const EnrolledCoursesDrawer: React.FC<PropsWithChildren> = ({
   children,
 }) => {
   const { data: enrolledList } = useGetEnrolledList();
-  const [open, setOpen] = useState(false);
+  const [drawerOpen, setDrawerOpen] = useAtom(EnrolledDrawerOpen);
   const navigate = useNavigate();
-  console.log(enrolledList);
+
   return (
-    <Drawer modal={true} direction="right" open={open} onOpenChange={setOpen}>
+    <Drawer
+      modal={true}
+      direction="right"
+      open={drawerOpen}
+      onOpenChange={setDrawerOpen}
+    >
       {children}
       <DrawerContent className="min-w-[794px] bg-[#F5F5F5]">
         <DrawerTitle className="flex flex-row items-end justify-between p-0 px-[57px] text-[#0A0A0A]">
@@ -84,7 +91,7 @@ export const EnrolledCoursesDrawer: React.FC<PropsWithChildren> = ({
                           alt="clock-icon"
                           className="inline-block h-[16px] w-[16px]"
                         />
-                        {enrolled?.schedule?.timeSlot?.label}
+                        {enrolled?.schedule?.timeSlot.label}
                       </div>
                       <div className="flex flex-row items-center gap-3">
                         <img
@@ -120,7 +127,7 @@ export const EnrolledCoursesDrawer: React.FC<PropsWithChildren> = ({
                   <button
                     onClick={() => {
                       navigate(`/courses/${enrolled?.course.id}`);
-                      setOpen(false);
+                      setDrawerOpen(false);
                     }}
                     className="h-[48px] w-[117px] rounded-lg border-2 border-[#958FEF] px-5 text-base text-[#958FEF]"
                   >

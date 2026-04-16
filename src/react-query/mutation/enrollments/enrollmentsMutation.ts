@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   completeEnrolledCourse,
+  deleteEnrolledCourse,
   enrolleCourse,
 } from "../../../api/enrollements";
 import type { AxiosError } from "axios";
@@ -11,6 +12,7 @@ import {
 } from "../../../state";
 
 export const useEnrolleCourse = () => {
+  const queryClient = useQueryClient();
   const [, setIsConflictModalOpen] = useAtom(isConflictModalOpenAtom);
   return useMutation({
     mutationKey: ["enrolle-course"],
@@ -19,6 +21,17 @@ export const useEnrolleCourse = () => {
       if (error.response?.status === 409) {
         setIsConflictModalOpen(true);
       }
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["get-single-course"],
+        exact: false,
+        refetchType: "all",
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["get-enrolled-list"],
+        refetchType: "all",
+      });
     },
   });
 };
@@ -30,7 +43,31 @@ export const useCompleteEnrolledCourse = () => {
     mutationFn: completeEnrolledCourse,
     onSuccess: () => {
       setIsCompleteModalOpen(true);
-      queryClient.invalidateQueries({ queryKey: ["get-single-course"] });
+      queryClient.invalidateQueries({
+        queryKey: ["get-single-course"],
+        refetchType: "all",
+      });
+    },
+  });
+};
+export const useDeleteEnrolledCourse = () => {
+  const [, setIsCompleteModalOpen] = useAtom(completeCourseModalOpenAtom);
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["delete-enrolled-course"],
+    mutationFn: deleteEnrolledCourse,
+    onSuccess: () => {
+      setIsCompleteModalOpen(true);
+      // queryClient.invalidateQueries({
+      //   queryKey: ["get-single-course"],
+      //   exact: false,
+      //   refetchType: "all",
+      // });
+      queryClient.invalidateQueries({
+        queryKey: ["get-enrolled-list"],
+        exact: false,
+        refetchType: "all",
+      });
     },
   });
 };

@@ -4,7 +4,6 @@ import type { Course } from "../../../types";
 
 const StartLearningSection = () => {
   const { data: featuredCourses } = useGetFeaturedCourses();
-  console.log("Featured Courses:", featuredCourses);
   return (
     <div className="flex flex-col gap-8">
       <div>

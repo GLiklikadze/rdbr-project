@@ -10,7 +10,35 @@ type enrolleCourseProps = {
 type completeEnrolledCourseProps = {
   courseEnrollementId: number;
 };
+type DayOfWeek =
+  | "monday"
+  | "tuesday"
+  | "wednesday"
+  | "thursday"
+  | "friday"
+  | "saturday"
+  | "sunday";
 
+export interface WeeklySchedule {
+  id: number;
+  label: string;
+  days: DayOfWeek[];
+}
+export interface TimeSlot {
+  id: number;
+  label: string;
+  startTime: string;
+  endTime: string;
+}
+
+export interface SessionType {
+  id: number;
+  courseScheduleId: number;
+  name: "online" | "offline" | string;
+  priceModifier: number;
+  availableSeats: number;
+  location: string;
+}
 export interface Enrollment {
   id: number;
   quantity: number;
@@ -18,7 +46,12 @@ export interface Enrollment {
   progress: number;
   completedAt: string | null;
   course: Course;
-  schedule: Schedule;
+  schedule: {
+    weeklySchedule: WeeklySchedule;
+    timeSlot: TimeSlot;
+    sessionType: SessionType;
+    location: string;
+  };
 }
 
 export interface Course {
@@ -83,6 +116,23 @@ export const completeEnrolledCourse = async ({
     return data;
   } catch (err) {
     console.error("Can`t complete", err);
+    throw err;
+  }
+};
+export const deleteEnrolledCourse = async ({
+  courseEnrollementId,
+}: completeEnrolledCourseProps) => {
+  try {
+    const { data, status, statusText } = await httpClient.delete(
+      `enrollments/${courseEnrollementId}`,
+    );
+
+    if (status !== 200 && status !== 201) {
+      throw new Error(`HTTP error! status: ${status} ${statusText}`);
+    }
+    return data;
+  } catch (err) {
+    console.error("Can`t delete", err);
     throw err;
   }
 };

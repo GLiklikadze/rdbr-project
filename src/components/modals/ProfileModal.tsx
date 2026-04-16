@@ -46,7 +46,6 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
     },
   });
   const onSubmit = (data: formData) => {
-    console.log(data);
     updateProfileMutate(data);
     setIsOpenProfileModal(false);
     resetForm();

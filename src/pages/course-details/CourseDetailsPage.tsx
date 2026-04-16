@@ -26,6 +26,7 @@ import {
 } from "../../components/ui/accordion";
 import {
   useCompleteEnrolledCourse,
+  useDeleteEnrolledCourse,
   useEnrolleCourse,
 } from "../../react-query/mutation/enrollments/enrollmentsMutation";
 import { days, hours, sessionTypes } from "./components/constantData";
@@ -63,6 +64,7 @@ const CourseDetailsPage = () => {
 
   const { mutate: enrolleCourseMutate, error, isError } = useEnrolleCourse();
   const { mutate: completeEnrolledMutate } = useCompleteEnrolledCourse();
+  const { mutate: deleteEnrolledMutate } = useDeleteEnrolledCourse();
   const courseScheduleId =
     sessionTypeData?.find((item) => item.id === selectedSessionId)
       ?.courseScheduleId ?? 0;
@@ -88,8 +90,6 @@ const CourseDetailsPage = () => {
     }
   };
 
-  console.log("sessiontypes", sessionTypeData);
-
   const toggleId = (id: number) => {
     setSelectedId((prev) => (prev === id ? null : id));
     setSelectedHourId(null);
@@ -106,9 +106,7 @@ const CourseDetailsPage = () => {
   const toggleSessionId = (id: number) => {
     setSelectedSessionId((prev) => (prev === id ? null : id));
   };
-  console.log("detailed course", courseDetailsData);
 
-  console.log("weeklysch", weeklySchedule);
   const handleDayClick = (dayId: number) => {
     hoursMutate({
       courseId: courseId ?? "",
@@ -151,7 +149,13 @@ const CourseDetailsPage = () => {
       courseEnrollementId: Number(courseDetailsData?.enrollment?.id),
     });
   };
-
+  const handleCourseDelete = () => {
+    if (courseDetailsData?.enrollment?.id) {
+      deleteEnrolledMutate({
+        courseEnrollementId: Number(courseDetailsData?.enrollment?.id),
+      });
+    }
+  };
   return (
     <div className="my-16 px-[177px] text-[#525252]">
       <div className="flex flex-row gap-[133px]">
@@ -229,6 +233,7 @@ const CourseDetailsPage = () => {
                 {courseDetailsData?.enrollment?.progress === 100 ? (
                   <button
                     className={`mt-8 flex h-[63px] w-[473px] cursor-pointer flex-row items-center justify-center gap-[10px] rounded-xl bg-[#4F46E5] font-semibold text-white`}
+                    onClick={handleCourseDelete}
                     type="button"
                   >
                     Retake Course

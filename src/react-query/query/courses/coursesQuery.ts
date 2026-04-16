@@ -28,7 +28,6 @@ export const useGetCoursesList = (courseFilters: CourseFilters) => {
 export const useGetSingleCourse = (courseId: string) => {
   return useQuery({
     queryKey: ["get-single-course", courseId],
-    retry: false,
     queryFn: () => getSingleCourse(courseId),
   });
 };
