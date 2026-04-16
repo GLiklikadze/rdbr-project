@@ -2,7 +2,7 @@ import type { CourseDetails } from "../../types";
 import starIcon from "@/assets/star.png";
 import clockIcon from "@/assets/clock.svg";
 import calendarIcon from "@/assets/calendar.svg";
-import codeIcon from "@/assets/code.svg";
+import { categoryIcons } from "../courses-list/components/utils";
 
 type CourseDetailsInfoSectionProps = {
   courseDetailsData: CourseDetails;
@@ -68,7 +68,11 @@ const CourseDetailsInfoSection: React.FC<CourseDetailsInfoSectionProps> = ({
           </div>
           <div className="flex flex-row items-center gap-[10px] rounded-xl px-3 py-2 hover:bg-[#DDDBFA]">
             <img
-              src={codeIcon}
+              src={
+                categoryIcons.find(
+                  (item) => item.id === courseDetailsData?.category?.id,
+                )?.icon
+              }
               alt="code-icon"
               className="inline-block h-[17px] w-[17px]"
             />

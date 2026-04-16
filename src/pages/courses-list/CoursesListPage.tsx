@@ -26,7 +26,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "../../components/ui/pagination";
-import { getPaginationRange } from "./components/utils";
+import { categoryIcons, getPaginationRange } from "./components/utils";
 
 const CoursesListPage = () => {
   type FiltersState = {
@@ -148,7 +148,10 @@ const CoursesListPage = () => {
                   } `}
                 >
                   <img
-                    src={codeIcon}
+                    src={
+                      categoryIcons.find((item) => item.id === category?.id)
+                        ?.icon
+                    }
                     alt="code-icon"
                     className="inline-block h-[17px] w-[17px]"
                   />

@@ -1,3 +1,9 @@
+import designIcon from "@/assets/design.svg";
+import businessIcon from "@/assets/business.svg";
+import scienceIcon from "@/assets/science.svg";
+import marketingIcon from "@/assets/marketing.svg";
+import codeIcon from "@/assets/code.svg";
+
 export const getPaginationRange = (current: number, total: number) => {
   const delta = 1;
   const pages: (number | "...")[] = [];
@@ -25,3 +31,26 @@ export const getPaginationRange = (current: number, total: number) => {
 
   return pages;
 };
+
+export const categoryIcons = [
+  {
+    id: 1,
+    icon: codeIcon,
+  },
+  {
+    id: 2,
+    icon: designIcon,
+  },
+  {
+    id: 3,
+    icon: businessIcon,
+  },
+  {
+    id: 4,
+    icon: marketingIcon,
+  },
+  {
+    id: 5,
+    icon: scienceIcon,
+  },
+];
