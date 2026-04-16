@@ -9,6 +9,7 @@ import { useAtomValue } from "jotai";
 import { isAuthenticatedAtom, userProfileAtom } from "../../state";
 import { EnrolledCoursesDrawer } from "../modals/EnrolledCoursesDrawer";
 import { DrawerTrigger } from "../ui/drawer";
+import RegisterModal from "../modals/RegisterModal";
 
 const Header = () => {
   const userInfo = useAtomValue(userProfileAtom);
@@ -41,9 +42,11 @@ const Header = () => {
                 Log In
               </button>
             </LogInModal>
-            <button className="h-[60px] w-[125px] rounded-[8px] bg-[#4F46E5] text-[20px] font-medium text-[#FFFFFF]">
-              Sign Up
-            </button>
+            <RegisterModal>
+              <button className="h-[60px] w-[125px] rounded-[8px] bg-[#4F46E5] text-[20px] font-medium text-[#FFFFFF]">
+                Sign Up
+              </button>
+            </RegisterModal>
           </div>
         )}
 

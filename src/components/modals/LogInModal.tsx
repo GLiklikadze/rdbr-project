@@ -11,7 +11,7 @@ import { useLogin } from "../../react-query/mutation/auth/authMutation";
 import { useState, type PropsWithChildren } from "react";
 import { Button } from "../ui/button";
 import { useAtom } from "jotai";
-import { isLoginModalOpenAtom } from "../../state";
+import { isLoginModalOpenAtom, isRegisterModalOpenAtom } from "../../state";
 
 const LogInModal: React.FC<PropsWithChildren> = ({ children }) => {
   const { mutate: loginMutate, error, isError } = useLogin();
@@ -20,6 +20,7 @@ const LogInModal: React.FC<PropsWithChildren> = ({ children }) => {
     password: "",
   });
   const [isLoginOpen, setIsLoginOpen] = useAtom(isLoginModalOpenAtom);
+  const [, setRegisterModalOpenAtom] = useAtom(isRegisterModalOpenAtom);
   const [errors, setErrors] = useState({
     email: "",
     password: "",
@@ -75,11 +76,12 @@ const LogInModal: React.FC<PropsWithChildren> = ({ children }) => {
           </DialogDescription>
         </DialogHeader>
         <form className="m-0 flex flex-col gap-6 p-0" onSubmit={handleSubmit}>
-          <div>
-            <label>Email</label>
+          <div className="space-y-2">
+            <label htmlFor="email">Email</label>
             <input
               type="email"
               name="email"
+              id="email"
               value={form.email}
               autoComplete="email"
               placeholder="you@example.com"
@@ -91,9 +93,10 @@ const LogInModal: React.FC<PropsWithChildren> = ({ children }) => {
           {errors.email && (
             <p className="text-sm text-red-500">{errors.email}</p>
           )}
-          <div>
-            <label>Password</label>
+          <div className="space-y-2">
+            <label htmlFor="password">Password</label>
             <input
+              id="password"
               name="password"
               type="password"
               value={form.password}
@@ -111,13 +114,25 @@ const LogInModal: React.FC<PropsWithChildren> = ({ children }) => {
               {error instanceof Error ? error.message : "An error occurred"}
             </p>
           )}
-          <DialogFooter>
-            <Button
-              type="submit"
-              className="h-[47px] w-full bg-[#4F46E5] text-[#FFFFFF]"
-            >
-              Log In
-            </Button>
+          <Button
+            type="submit"
+            className="h-[47px] w-full bg-[#4F46E5] text-[#FFFFFF]"
+          >
+            Log In
+          </Button>
+          <DialogFooter className="flex flex-col">
+            <div className="mx-auto text-xs">
+              Don`t have an account?{" "}
+              <span
+                onClick={() => {
+                  setIsLoginOpen(false);
+                  setRegisterModalOpenAtom(true);
+                }}
+                className="cursor-pointer text-sm font-medium text-[#141414] underline"
+              >
+                Sign Up
+              </span>
+            </div>
           </DialogFooter>
         </form>
       </DialogContent>

@@ -1,7 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
-import { login } from "../../../api/auth";
+import { login, register } from "../../../api/auth";
 import { useAtom } from "jotai";
-import { tokenAtom, userProfileAtom } from "../../../state";
+import {
+  isRegisterModalOpenAtom,
+  tokenAtom,
+  userProfileAtom,
+} from "../../../state";
 
 export const useLogin = () => {
   const [, setToken] = useAtom(tokenAtom);
@@ -16,6 +20,24 @@ export const useLogin = () => {
       }
       setToken(token);
       setProfile(data?.data?.user);
+    },
+  });
+};
+export const useRegister = () => {
+  const [, setToken] = useAtom(tokenAtom);
+  const [, setProfile] = useAtom(userProfileAtom);
+  const [, setRegisterModal] = useAtom(isRegisterModalOpenAtom);
+  return useMutation({
+    mutationKey: ["register"],
+    mutationFn: register,
+    onSuccess: (data) => {
+      const token = data?.data?.token;
+      if (!token) {
+        return;
+      }
+      setToken(token);
+      setProfile(data?.data?.user);
+      setRegisterModal(false);
     },
   });
 };

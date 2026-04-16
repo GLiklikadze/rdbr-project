@@ -132,7 +132,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
             </div>
             <div>
               <div className="text-xl font-semibold text-[#0A0A0A]">
-                {userInfo?.fullName}
+                {userInfo?.username}
               </div>
               <div className="text-[10px]">
                 {notCompleteProfile ? (
@@ -149,7 +149,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
           onSubmit={handleSubmit(onSubmit)}
         >
           <div>
-            <label htmlFor="username" className="text-[#3D3D3D]">
+            <label htmlFor="full_name" className="text-[#3D3D3D]">
               Full Name
             </label>
             <Controller
@@ -162,7 +162,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                   message: "Name must be at least 3 characters",
                 },
                 maxLength: {
-                  value: 10,
+                  value: 50,
                   message: "Name must not exceed 50 characters",
                 },
               }}
@@ -170,9 +170,9 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                 return (
                   <input
                     type="text"
-                    id="username"
-                    autoComplete="username"
-                    placeholder="Username"
+                    id="full_name"
+                    autoComplete="name"
+                    placeholder="John Smith"
                     className="mt-2 h-[48px] w-[360px] rounded-lg border-[1.5px] border-[#D1D1D1] bg-[#FFFFFF] pl-2"
                     {...field}
                   />
