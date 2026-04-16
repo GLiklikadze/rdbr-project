@@ -1,5 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { getFeaturedCourses, getSingleCourse } from "../../../api/courses";
+import {
+  getCourses,
+  getFeaturedCourses,
+  getSingleCourse,
+} from "../../../api/courses";
+import type { CourseFilters } from "../../../types";
 
 export const useGetFeaturedCourses = () => {
   return useQuery({
@@ -8,6 +13,15 @@ export const useGetFeaturedCourses = () => {
     queryFn: getFeaturedCourses,
     staleTime: 5 * 60 * 1000,
     gcTime: 5 * 60 * 1000,
+  });
+};
+export const useGetCoursesList = (courseFilters: CourseFilters) => {
+  return useQuery({
+    queryKey: ["get-courses-list", courseFilters],
+    retry: false,
+    queryFn: () => getCourses(courseFilters),
+    // staleTime: 5 * 60 * 1000,
+    // gcTime: 5 * 60 * 1000,
   });
 };
 

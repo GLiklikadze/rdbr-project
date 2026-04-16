@@ -1,4 +1,4 @@
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import rocketIcon from "@/assets/rocket.png";
 import starstIcon from "@/assets/stars.png";
 import bookIcon from "@/assets/book.png";
@@ -13,7 +13,7 @@ import { DrawerTrigger } from "../ui/drawer";
 const Header = () => {
   const userInfo = useAtomValue(userProfileAtom);
   const isAuth = useAtomValue(isAuthenticatedAtom);
-
+  const navigate = useNavigate();
   const notCompleteProfile =
     !userInfo?.age || !userInfo?.fullName || !userInfo?.mobileNumber;
   return (
@@ -24,7 +24,7 @@ const Header = () => {
         </div>
       </Link>
       <div className="flex gap-6 font-medium">
-        <button>
+        <button onClick={() => navigate("/courses")}>
           <div className="flex flex-row gap-3">
             <img
               src={starstIcon}

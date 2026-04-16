@@ -2,6 +2,12 @@ import type { AxiosError } from "axios";
 import type { PropsWithChildren } from "react";
 export interface CoursesResponse {
   data: Course[];
+  meta?: {
+    currentPage: number;
+    lastPage: number;
+    perPage: number;
+    total: number;
+  };
 }
 
 export interface Course {
@@ -163,4 +169,12 @@ export interface EnrollmentConflictModalProps {
   isError: boolean;
   courseId: string | number;
   courseScheduleId: string | number;
+}
+
+export interface CourseFilters {
+  categories?: number[];
+  topics?: number[];
+  instructors?: number[];
+  sort: "newest" | "price_asc" | "price_desc" | "popular" | "title_asc";
+  page: number;
 }
