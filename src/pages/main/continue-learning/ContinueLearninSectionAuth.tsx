@@ -1,11 +1,17 @@
-import { useAtom } from "jotai";
+import { useAtom, useAtomValue } from "jotai";
 import { useGetEnrolledList } from "../../../react-query/query/enrollments/enrollementsQuery";
-import { EnrolledDrawerOpen } from "../../../state";
+import {
+  EnrolledDrawerOpen,
+  isAuthenticatedAtom,
+  isCompleteProfileAtom,
+} from "../../../state";
 import ContinueLearningBoxAuth from "./ContinueLearningBoxAuth";
 
 const ContinueLearningSectionAuth = () => {
   const [, setDrawerOpen] = useAtom(EnrolledDrawerOpen);
   const { data: enrolledList } = useGetEnrolledList();
+  const isAuth = useAtomValue(isAuthenticatedAtom);
+  const isComplete = useAtomValue(isCompleteProfileAtom);
   return (
     <div className="flex flex-col gap-8">
       <div className="space-y-2">
@@ -18,7 +24,7 @@ const ContinueLearningSectionAuth = () => {
           </p>
           <div
             className="cursor-pointer text-[#4F46E5] underline"
-            onClick={() => setDrawerOpen(true)}
+            onClick={() => isAuth && isComplete && setDrawerOpen(true)}
           >
             See All
           </div>

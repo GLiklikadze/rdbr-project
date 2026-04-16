@@ -14,6 +14,7 @@ import RegisterModal from "../modals/RegisterModal";
 const Header = () => {
   const userInfo = useAtomValue(userProfileAtom);
   const isAuth = useAtomValue(isAuthenticatedAtom);
+
   const navigate = useNavigate();
   const notCompleteProfile =
     !userInfo?.age || !userInfo?.fullName || !userInfo?.mobileNumber;

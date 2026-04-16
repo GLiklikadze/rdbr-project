@@ -8,11 +8,19 @@ import mailIcon from "@/assets/mail.svg";
 import phoneIcon from "@/assets/phone.svg";
 import pinIcon from "@/assets/pin.svg";
 import { Link } from "react-router-dom";
-import { isProfileModalOpenAtom } from "../../state";
-import { useAtom } from "jotai";
+import {
+  EnrolledDrawerOpen,
+  isAuthenticatedAtom,
+  isCompleteProfileAtom,
+  isProfileModalOpenAtom,
+} from "../../state";
+import { useAtom, useAtomValue } from "jotai";
 
 const Footer = () => {
+  const isAuth = useAtomValue(isAuthenticatedAtom);
+  const isComplete = useAtomValue(isCompleteProfileAtom);
   const [, setIsOpenProfileModal] = useAtom(isProfileModalOpenAtom);
+  const [, setDrawerOpen] = useAtom(EnrolledDrawerOpen);
   return (
     <div className="flex h-[334px] w-full flex-col gap-[74px] border-t-[1px] border-[#D1D1D1] px-[177px] pt-[80px]">
       <div className="flex flex-row justify-between">
@@ -68,7 +76,12 @@ const Footer = () => {
               Explore
             </div>
             <Link to="/courses">Browse Courses</Link>
-            <div>Enrolle Courses</div>
+            <div
+              className="cursor-pointer"
+              onClick={() => isAuth && isComplete && setDrawerOpen(true)}
+            >
+              Enrolle Courses
+            </div>
           </div>
           <div>
             <div className="mb-4 text-xl font-semibold text-[#130E67]">

@@ -14,6 +14,7 @@ import { useAtom } from "jotai";
 import { isLoginModalOpenAtom, isRegisterModalOpenAtom } from "../../state";
 import { Controller, useForm } from "react-hook-form";
 import uploadIcon from "@/assets/upload.svg";
+import axios from "axios";
 
 type RegisterFormType = {
   email: string;
@@ -316,7 +317,11 @@ const RegisterModal: React.FC<PropsWithChildren> = ({ children }) => {
           )}
           {isError && (
             <p className="text-sm text-red-500">
-              {error instanceof Error ? error.message : "An error occurred"}
+              <p className="text-sm text-red-500">
+                {axios.isAxiosError(error)
+                  ? error.response?.data?.message
+                  : "An error occurred"}
+              </p>
             </p>
           )}
           {registerStep == 1 || registerStep === 2 ? (

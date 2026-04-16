@@ -12,6 +12,7 @@ import { useState, type PropsWithChildren } from "react";
 import { Button } from "../ui/button";
 import { useAtom } from "jotai";
 import { isLoginModalOpenAtom, isRegisterModalOpenAtom } from "../../state";
+import axios from "axios";
 
 const LogInModal: React.FC<PropsWithChildren> = ({ children }) => {
   const { mutate: loginMutate, error, isError } = useLogin();
@@ -63,6 +64,7 @@ const LogInModal: React.FC<PropsWithChildren> = ({ children }) => {
       },
     });
   };
+
   return (
     <Dialog open={isLoginOpen} onOpenChange={setIsLoginOpen}>
       <DialogTrigger asChild>{children}</DialogTrigger>
@@ -111,7 +113,9 @@ const LogInModal: React.FC<PropsWithChildren> = ({ children }) => {
           )}
           {isError && (
             <p className="text-sm text-red-500">
-              {error instanceof Error ? error.message : "An error occurred"}
+              {axios.isAxiosError(error)
+                ? error.response?.data?.message
+                : "An error occurred"}
             </p>
           )}
           <Button
