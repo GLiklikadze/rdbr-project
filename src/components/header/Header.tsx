@@ -25,7 +25,7 @@ const Header = () => {
       </Link>
       <div className="flex gap-6 font-medium">
         <button onClick={() => navigate("/courses")}>
-          <div className="flex flex-row gap-3">
+          <div className="flex flex-row gap-3 hover:text-[#4F46E5]">
             <img
               src={starstIcon}
               alt="logo"
@@ -56,7 +56,7 @@ const Header = () => {
                     e.currentTarget.blur();
                   }}
                 >
-                  <div className="flex flex-row gap-3">
+                  <div className="flex flex-row gap-3 hover:text-[#4F46E5]">
                     <img
                       src={bookIcon}
                       alt="logo"

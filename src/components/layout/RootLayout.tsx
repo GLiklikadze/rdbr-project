@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import PageContainer from "./PageContainer";
 import Header from "../header/Header";
+import Footer from "../footer/Footer";
 
 const RootLayout = () => {
   return (
@@ -8,6 +9,7 @@ const RootLayout = () => {
       <PageContainer>
         <Header />
         <Outlet />
+        <Footer />
       </PageContainer>
     </div>
   );
